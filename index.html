@@ -1,0 +1,2057 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Villa La Margherita — Cossato, Biella</title>
+  <meta name="description" content="Villa nobiliare del XVII secolo a Cossato (Biella). Location esclusiva per matrimoni, eventi corporate e celebrazioni private. Residenza storica dei Conti Fecia di Cossato." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 132px; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    /* ─── TOKENS ───────────────────────────────────────── */
+    :root {
+      --gold:         #B8972A;
+      --gold-light:   #D4AF4A;
+      --gold-pale:    #F2E8C8;
+      --gold-deep:    #8A6E1A;
+      --cream:        #FAF7F0;
+      --cream-dark:   #F0EBE0;
+      --ink:          #1C1A14;
+      --ink-soft:     #3D3928;
+      --stone:        #7A7260;
+      --stone-light:  #C8C0A8;
+      --stone-pale:   #E8E2D4;
+
+      --font-serif: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+      --font-sans:  'Jost', system-ui, sans-serif;
+
+      --max-w: 1200px;
+      --pad-x: clamp(24px, 5vw, 80px);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HERO FADE-IN (on load) ──────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      animation: fadeUp 0.9s ease both;
+      animation-delay: 0.1s;
+    }
+    .hero-sub {
+      animation: fadeUp 0.9s ease both;
+      animation-delay: 0.55s;
+    }
+    .hero-actions {
+      animation: fadeUp 0.9s ease both;
+      animation-delay: 0.75s;
+    }
+
+    /* ─── TEXT REVEAL — lettera per lettera ───────────── */
+    .text-reveal-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(0.35em);
+      filter: blur(5px);
+      transition:
+        opacity   0.5s ease,
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        filter    0.5s ease;
+      transition-delay: calc(var(--char-i) * 35ms);
+    }
+    [data-text-reveal].chars-visible .text-reveal-char {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .text-reveal-char {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+      }
+    }
+
+    /* ─── SCROLL REVEAL ────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.30s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+    .reveal-delay-4 { transition-delay: 0.60s; }
+
+    /* ─── IMAGE WIPE — barra oro ───────────────────────── */
+    .img-wipe {
+      position: relative;
+      overflow: hidden;
+    }
+    .img-wipe::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, var(--gold-deep) 0%, var(--gold) 45%, var(--gold-light) 72%, var(--gold-pale) 100%);
+      transform: translateX(0);
+      z-index: 3;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .img-wipe.wipe-done::after {
+      transform: translateX(102%);
+      transition: transform 0.75s cubic-bezier(0.77, 0, 0.18, 1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .img-wipe::after { display: none; }
+    }
+
+    /* ─── UTILITY ──────────────────────────────────────── */
+    .label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 var(--pad-x);
+      margin: 56px 0 48px;
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--stone-light);
+    }
+    .ornament-divider span {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    /* ─── NAVIGATION ───────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px var(--pad-x);
+      background: var(--cream);
+      border-bottom: 1px solid var(--stone-light);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled {
+      box-shadow: 0 2px 24px rgba(28,26,20,0.08);
+    }
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.1;
+    }
+    .nav-logo span {
+      display: block;
+      font-family: var(--font-sans);
+      font-weight: 200;
+      font-size: 7px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 10px;
+      letter-spacing: 2px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--stone);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink);
+      border: 1px solid var(--gold);
+      padding: 10px 22px;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+      cursor: pointer;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--cream); }
+    .nav-lang {
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--stone);
+      cursor: pointer;
+      margin-left: 16px;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+    }
+    .nav-lang:hover { color: var(--gold); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Mobile nav toggle — hidden on desktop */
+    .nav-toggle { display: none; }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 92vh;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    /* Slideshow */
+    .hero-slides {
+      position: absolute;
+      inset: 0;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    .hero-slide.active {
+      opacity: 1;
+    }
+    .hero-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
+    /* Slide indicators */
+    .hero-dots {
+      position: absolute;
+      bottom: 32px;
+      right: var(--pad-x);
+      z-index: 3;
+      display: flex;
+      gap: 10px;
+    }
+    .hero-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(250,247,240,0.35);
+      cursor: pointer;
+      transition: background 0.3s;
+      border: none;
+      padding: 0;
+    }
+    .hero-dot.active {
+      background: var(--gold-light);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(28,26,20,0.1) 0%,
+        rgba(28,26,20,0.2) 40%,
+        rgba(28,26,20,0.65) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 var(--pad-x) clamp(48px, 8vh, 88px);
+      max-width: calc(var(--max-w) + var(--pad-x) * 2);
+    }
+    .hero-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 200;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 18px;
+      opacity: 0;
+      animation: heroFadeUp 1s 0.4s forwards;
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 300;
+      line-height: 0.92;
+      color: var(--cream);
+      letter-spacing: -1px;
+      margin-bottom: 28px;
+    }
+    .hero-title .text-reveal-char {
+      transition-delay: calc(0.45s + var(--char-i) * 40ms);
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+      display: block;
+    }
+    .hero-sub {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(250,247,240,0.65);
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: heroFadeUp 1s 1s forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: heroFadeUp 1s 1.3s forwards;
+    }
+    .btn {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 15px 32px;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--cream);
+      border: 1px solid var(--gold);
+    }
+    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .btn-ghost-light {
+      background: transparent;
+      color: rgba(250,247,240,0.85);
+      border: 1px solid rgba(250,247,240,0.45);
+    }
+    .btn-ghost-light:hover {
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+    }
+    .btn-ghost-dark {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--gold);
+    }
+    .btn-ghost-dark:hover { background: var(--gold); color: var(--cream); }
+
+    /* ─── INTRO ────────────────────────────────────────── */
+    .intro {
+      max-width: calc(var(--max-w) + var(--pad-x) * 2);
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 96px);
+      align-items: center;
+      margin-bottom: 80px;
+    }
+    .intro-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 22px;
+    }
+    .intro-heading em { font-style: italic; color: var(--gold); }
+    .intro-body {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--stone);
+      margin-bottom: 32px;
+    }
+    .text-link {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+      transition: color 0.25s;
+    }
+    .text-link:hover { color: var(--gold); }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--stone-light);
+      margin-top: 36px;
+    }
+    .stat-item {
+      padding: 22px 26px;
+      border-right: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+    }
+    .stat-item:nth-child(2n) { border-right: none; }
+    .stat-item:nth-child(n+3) { border-bottom: none; }
+    .stat-num {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+    .stat-label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    @keyframes statFadeIn {
+      from { opacity: 0; letter-spacing: 6px; }
+      to   { opacity: 1; letter-spacing: 2px; }
+    }
+    .stat-static-visible {
+      animation: statFadeIn 1s ease both;
+    }
+    .intro-visual {
+      position: relative;
+      height: clamp(360px, 50vw, 500px);
+      overflow: hidden;
+      background: linear-gradient(135deg, #C8BFA0 0%, #8A7850 50%, #5A4830 100%);
+    }
+    .intro-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* placeholder when no image */
+    .intro-visual-placeholder {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 40% 35%, #D4C090 0%, transparent 65%),
+        radial-gradient(ellipse 60% 80% at 70% 70%, #4A3010 0%, transparent 70%),
+        linear-gradient(145deg, #B09060 0%, #706040 50%, #3A2810 100%);
+    }
+    .intro-visual-caption {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(250,247,240,0.55);
+      font-weight: 200;
+    }
+
+    /* ─── SPACES ───────────────────────────────────────── */
+    .spaces {
+      background: var(--ink);
+      padding: clamp(56px, 8vh, 88px) var(--pad-x);
+    }
+    .spaces-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+      max-width: var(--max-w);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .spaces-header .label { color: #D4AF4A; }
+    .spaces-title {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1;
+      margin-top: 8px;
+    }
+    .spaces-title em { font-style: italic; color: var(--gold-light); }
+    .spaces-explore {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--stone-light);
+      text-decoration: none;
+      transition: color 0.25s;
+      white-space: nowrap;
+    }
+    .spaces-explore:hover { color: var(--gold-light); }
+    .spaces-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3px;
+      height: clamp(300px, 40vw, 420px);
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .space-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+    .space-card-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.7s ease;
+    }
+    .space-card:hover .space-card-bg { transform: scale(1.06); }
+    .space-card-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Placeholder gradients */
+    .bg-villa {
+      background: linear-gradient(150deg, #D4C090 0%, #9A8050 35%, #5A4020 100%);
+    }
+    .bg-giardino {
+      background: linear-gradient(150deg, #6A8040 0%, #4A6028 50%, #2A3810 100%);
+    }
+    .bg-chiesa {
+      background: linear-gradient(150deg, #C0B090 0%, #806848 50%, #483828 100%);
+    }
+    .space-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(18,14,6,0.88) 0%, rgba(18,14,6,0.1) 55%, transparent 100%);
+    }
+    .space-card-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px;
+    }
+    .space-card-eyebrow {
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      font-weight: 200;
+    }
+    .space-card-title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      font-size: 22px;
+    }
+    .space-card.large .space-card-title { font-size: 34px; }
+
+    /* ─── EVENTI ───────────────────────────────────────── */
+    .eventi {
+      padding: clamp(64px, 10vh, 100px) var(--pad-x);
+      max-width: calc(var(--max-w) + var(--pad-x) * 2);
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-top: 12px;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .eventi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--stone-light);
+    }
+    .event-item {
+      padding: 40px 28px;
+      text-align: center;
+      border-right: 1px solid var(--stone-light);
+      cursor: default;
+      transition: background 0.3s;
+    }
+    .event-item:last-child { border-right: none; }
+    .event-item:hover { background: var(--gold-pale); }
+    .event-glyph {
+      color: var(--gold);
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    .event-glyph svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--gold);
+    }
+    .event-name {
+      font-family: var(--font-serif);
+      font-size: 21px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .event-desc {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--stone);
+    }
+
+    /* ─── GALLERIA ─────────────────────────────────────── */
+    .galleria {
+      padding: clamp(64px, 10vh, 100px) var(--pad-x);
+      max-width: calc(var(--max-w) + var(--pad-x) * 2);
+      margin: 0 auto;
+    }
+    .galleria-grid {
+      display: grid;
+      gap: 6px;
+    }
+    .galleria-grid-top {
+      grid-template-columns: 2fr 1fr 1fr;
+      margin-bottom: 6px;
+    }
+    .galleria-grid-bottom {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .gal-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .gal-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .gal-item:hover img {
+      transform: scale(1.05);
+    }
+    .gal-item.tall { height: clamp(260px, 30vw, 380px); }
+    .gal-item.short { height: clamp(160px, 18vw, 240px); }
+    .gal-item.sq { height: clamp(160px, 18vw, 220px); }
+
+    /* ─── EVENTI FOTO BAND ──────────────────────────────── */
+    .eventi-foto {
+      background: var(--cream-dark);
+      padding: clamp(56px, 8vh, 88px) var(--pad-x);
+      border-top: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+    }
+    .eventi-foto-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 5vw, 80px);
+      align-items: center;
+    }
+    .eventi-foto-text .label { margin-bottom: 14px; }
+    .eventi-foto-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(30px, 3vw, 44px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .eventi-foto-heading em { font-style: italic; color: var(--gold); }
+    .eventi-foto-body {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--stone);
+      margin-bottom: 30px;
+    }
+    .eventi-foto-imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .eventi-foto-imgs .ef-img {
+      overflow: hidden;
+    }
+    .eventi-foto-imgs .ef-img img {
+      width: 100%;
+      height: clamp(140px, 16vw, 200px);
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .eventi-foto-imgs .ef-img:hover img {
+      transform: scale(1.05);
+    }
+    .ef-img.wide {
+      grid-column: 1 / -1;
+    }
+    .ef-img.wide img {
+      height: clamp(180px, 20vw, 260px);
+    }
+
+    @media (max-width: 900px) {
+      .galleria-grid-top { grid-template-columns: 1fr 1fr; }
+      .galleria-grid-top .gal-item:first-child { grid-column: 1 / -1; }
+      .galleria-grid-bottom { grid-template-columns: 1fr 1fr; }
+      .eventi-foto-inner { grid-template-columns: 1fr; }
+    }
+
+    /* ─── STORIA BAND ──────────────────────────────────── */
+    .storia {
+      background: var(--gold-pale);
+      border-top: 1px solid #D8CCAA;
+      border-bottom: 1px solid #D8CCAA;
+      padding: clamp(56px, 8vh, 88px) var(--pad-x);
+    }
+    .storia-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: clamp(48px, 6vw, 88px);
+      align-items: center;
+    }
+    .storia-quote {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 2.8vw, 32px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      position: relative;
+      padding-left: 40px;
+    }
+    .storia-quote::before {
+      content: '\201C';
+      position: absolute;
+      left: -8px;
+      top: -16px;
+      font-size: 96px;
+      color: var(--gold);
+      line-height: 1;
+      font-style: normal;
+      opacity: 0.7;
+    }
+    .storia-since {
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 14px;
+    }
+    .storia-body {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--stone);
+      margin-bottom: 24px;
+    }
+
+    /* ─── CONTACT ──────────────────────────────────────── */
+    .contact {
+      background: var(--ink);
+      padding: clamp(72px, 12vh, 112px) var(--pad-x);
+      text-align: center;
+    }
+    .contact-title {
+      font-family: var(--font-serif);
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-top: 14px;
+      margin-bottom: 18px;
+    }
+    .contact-sub {
+      font-size: 13px;
+      font-weight: 200;
+      color: var(--stone-light);
+      margin-bottom: 48px;
+      letter-spacing: 0.5px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contact-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+    .btn-gold { background: var(--gold); color: var(--cream); border: 1px solid var(--gold); }
+    .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .btn-outline-cream {
+      background: transparent;
+      color: var(--stone-light);
+      border: 1px solid rgba(250,247,240,0.25);
+    }
+    .btn-outline-cream:hover { border-color: var(--gold); color: var(--gold); }
+    .contact-details {
+      display: flex;
+      justify-content: center;
+      gap: clamp(32px, 5vw, 64px);
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(250,247,240,0.08);
+      padding-top: 40px;
+    }
+    .contact-detail {
+      text-align: center;
+    }
+    .contact-detail-label {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .contact-detail-value {
+      font-size: 12px;
+      font-weight: 200;
+      color: var(--stone-light);
+      letter-spacing: 0.5px;
+    }
+    .contact-detail-value a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .contact-detail-value a:hover { color: var(--gold-light); }
+
+    /* ─── FOOTER ───────────────────────────────────────── */
+    .footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(250,247,240,0.07);
+      padding: 28px var(--pad-x);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(250,247,240,0.35);
+      text-decoration: none;
+    }
+    .footer-copy {
+      font-size: 10px;
+      font-weight: 200;
+      color: rgba(250,247,240,0.2);
+      letter-spacing: 0.5px;
+    }
+    .footer-lang {
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      cursor: pointer;
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+    }
+    .footer-lang:hover { color: var(--gold-light); }
+
+    /* ─── ANIMATIONS ───────────────────────────────────── */
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .intro { grid-template-columns: 1fr; }
+      .intro-visual { height: 280px; }
+      .spaces-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: auto; }
+      .space-card.large { grid-column: 1 / -1; height: 240px; }
+      .space-card:not(.large) { height: 180px; }
+      .eventi-grid { grid-template-columns: 1fr 1fr; }
+      .event-item { border-bottom: 1px solid var(--stone-light); }
+      .storia-inner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .eventi-grid { grid-template-columns: 1fr; }
+      .event-item { border-right: none; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer { flex-direction: column; text-align: center; gap: 10px; }
+    }
+
+    /* ─── CUSTOM CURSOR ────────────────────────────────── */
+    body { cursor: none; }
+    a, button, [role="button"], label, input, select, textarea { cursor: none; }
+
+    #cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease, opacity 0.2s ease;
+      will-change: transform, left, top;
+    }
+
+    #cursor-ring {
+      position: fixed;
+      top: 0; left: 0;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.2s ease;
+      will-change: transform, left, top, width, height;
+      opacity: 0.7;
+    }
+
+    #cursor-ring.expanded {
+      width: 64px;
+      height: 64px;
+      border-color: var(--gold-light);
+      opacity: 1;
+    }
+
+    @media (hover: none) {
+      #cursor-dot, #cursor-ring { display: none; }
+      body, a, button { cursor: auto; }
+    }
+
+    /* ─── LIGHTBOX ─────────────────────────────────────── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(28, 26, 20, 0.95);
+      align-items: center;
+      justify-content: center;
+      cursor: none;
+    }
+    #lightbox.open { display: flex; }
+
+    #lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      border: 1px solid rgba(184,151,42,0.25);
+      box-shadow: 0 0 80px rgba(0,0,0,0.6);
+      animation: lb-in 0.3s ease;
+    }
+    @keyframes lb-in {
+      from { opacity: 0; transform: scale(0.96); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    #lightbox-close {
+      position: fixed;
+      top: 24px; right: 32px;
+      width: 44px; height: 44px;
+      border: 1px solid rgba(184,151,42,0.5);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--gold-light);
+      font-size: 20px;
+      line-height: 1;
+      cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    #lightbox-close:hover {
+      border-color: var(--gold);
+      background: rgba(184,151,42,0.12);
+    }
+
+    .lb-arrow {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px;
+      border: 1px solid rgba(184,151,42,0.4);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--gold-light);
+      font-size: 18px;
+      cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .lb-arrow:hover {
+      border-color: var(--gold);
+      background: rgba(184,151,42,0.12);
+    }
+    #lb-prev { left: 24px; }
+    #lb-next { right: 24px; }
+
+    #lb-counter {
+      position: fixed;
+      bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--stone-light);
+      font-weight: 300;
+    }
+
+    .lb-trigger { cursor: none; }
+
+    /* ─── PAGE CURTAIN ─────────────────────────────────── */
+    #page-curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      transform: translateY(0);
+      background: linear-gradient(175deg, #B8972A 0%, #D4AF4A 38%, #F2E8C8 78%, #FAF7F0 100%);
+    }
+    #page-curtain::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #8A6E1A 20%, #D4AF4A 50%, #8A6E1A 80%, transparent);
+    }
+
+    /* ─── SCROLL NAV ────────────────────────────────────── */
+    #scroll-nav {
+      position: fixed;
+      right: clamp(14px, 2vw, 28px);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+    }
+    #scroll-nav::before {
+      content: '';
+      position: absolute;
+      right: 2px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--stone-light);
+      opacity: 0.35;
+    }
+    .sn-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .sn-label {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--stone);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s;
+      pointer-events: none;
+    }
+    .sn-item:hover .sn-label {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .sn-item.active .sn-label {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--gold);
+    }
+    .sn-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--stone-light);
+      flex-shrink: 0;
+      transition: background 0.3s, transform 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    }
+    .sn-item:hover .sn-dot {
+      background: var(--stone);
+    }
+    .sn-item.active .sn-dot {
+      background: var(--gold);
+      border-radius: 1px;
+      transform: rotate(45deg) scale(1.3);
+      box-shadow: 0 0 0 3px rgba(184,151,42,0.18);
+    }
+    @media (max-width: 768px) { #scroll-nav { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div id="page-curtain"></div>
+
+  <!-- ─── CUSTOM CURSOR ───────────────────────────────── -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ─── LIGHTBOX ────────────────────────────────────── -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizzazione immagine">
+    <button id="lb-prev" class="lb-arrow" aria-label="Precedente">&#8592;</button>
+    <img id="lightbox-img" src="" alt="" />
+    <button id="lb-next" class="lb-arrow" aria-label="Successiva">&#8594;</button>
+    <button id="lightbox-close" aria-label="Chiudi">&#10005;</button>
+    <div id="lb-counter"></div>
+  </div>
+
+  <!-- ─── NAVIGATION ──────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">
+        <img src="assets/images/Logo_LaMargherita.PNG" alt="Villa La Margherita" style="height: 70px; width: auto;" />
+      </a>
+    <ul class="nav-links">
+      <li><a href="#la-villa" data-i18n="nav-villa">La Villa</a></li>
+      <li><a href="#spazi" data-i18n="nav-spazi">Gli Spazi</a></li>
+      <li><a href="#eventi" data-i18n="nav-eventi">Gli Eventi</a></li>
+      <li><a href="#storia" data-i18n="nav-storia">La Storia</a></li>
+      <li><a href="#contatti" data-i18n="nav-contatti">Contatti</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#contatti" class="nav-cta" data-i18n="nav-cta">Richiedi Preventivo</a>
+      <button class="nav-lang" id="lang-toggle" aria-label="Cambia lingua">IT · EN</button>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ────────────────────────────────────────── -->
+  <section class="hero" id="hero-section">
+    <div class="hero-slides">
+      <div class="hero-slide active">
+        <img src="assets/images/3298c359-aa0c-425f-b4cf-ed438aaf07fd.JPG" alt="Villa La Margherita — facciata e giardino" />
+      </div>
+      <div class="hero-slide">
+        <img src="assets/images/IMG_4827.JPG" alt="Salone affrescato con vista sul giardino" />
+      </div>
+      <div class="hero-slide">
+        <img src="assets/images/IMG_4820.JPG" alt="Giardino con tavoli allestiti per un evento" />
+      </div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-dots">
+      <button class="hero-dot active" data-slide="0" aria-label="Slide 1"></button>
+      <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
+      <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" data-i18n="hero-eyebrow">Dal XVII Secolo &middot; Cossato, Biella</p>
+      <h1 class="hero-title" data-text-reveal data-i18n="hero-title">
+        Villa<br>
+        <em>La Margherita</em>
+      </h1>
+      <p class="hero-sub" data-i18n="hero-sub">Un luogo senza tempo per celebrare ciò che conta</p>
+      <div class="hero-actions">
+        <a href="#la-villa" class="btn btn-primary" data-i18n="hero-btn-primary">Scopri la Villa</a>
+        <a href="#contatti" class="btn btn-ghost-light" data-i18n="hero-btn-ghost">Richiedi Preventivo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DIVIDER ─────────────────────────────────────── -->
+  <div class="ornament-divider"><span>✦</span></div>
+
+  <!-- ─── INTRO / LA VILLA ────────────────────────────── -->
+  <section class="intro" id="la-villa">
+    <div class="reveal">
+      <p class="label" data-i18n="intro-label">La Villa</p>
+      <h2 class="intro-heading" data-text-reveal data-i18n="intro-heading" style="margin-top:12px;">
+        Quattro secoli di storia<br>
+        a disposizione dei <em>tuoi</em> eventi
+      </h2>
+      <p class="intro-body" data-i18n="intro-body">
+        Residenza estiva dei Conti Fecia di Cossato sin dalle origini, Villa La Margherita conserva intatta l'eleganza sobria del Piemonte nobiliare. Saloni affrescati, soffitti a cassettoni, un giardino all'italiana di 4.000 mq e una chiesa consacrata: ogni spazio racconta secoli di storia e offre una cornice irripetibile.
+      </p>
+      <a href="#spazi" class="text-link" data-i18n="intro-link">Esplora gli spazi →</a>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-num">1000</div>
+          <div class="stat-label" data-i18n="stat-villa">mq di Villa</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.000</div>
+          <div class="stat-label" data-i18n="stat-giardino">mq di Giardino</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">250+</div>
+          <div class="stat-label" data-i18n="stat-ospiti">Ospiti seduti</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">XVII</div>
+          <div class="stat-label" data-i18n="stat-secolo">Secolo</div>
+        </div>
+      </div>
+    </div>
+    <div class="intro-visual img-wipe reveal reveal-delay-2">
+      <img src="assets/images/IMG_6660.jpeg" alt="Il salone affrescato" />
+      <div class="intro-visual-caption" data-i18n="intro-caption">Il salone affrescato</div>
+    </div>
+  </section>
+
+  <!-- ─── SPAZI ────────────────────────────────────────── -->
+  <section class="spaces" id="spazi">
+    <div class="spaces-header reveal">
+      <div>
+        <p class="label" style="color:#D4AF4A;" data-i18n="spazi-label">Gli Spazi</p>
+        <h2 class="spaces-title" data-text-reveal data-i18n="spazi-title">Tre <em>luoghi</em>, una storia</h2>
+      </div>
+      <a href="#contatti" class="spaces-explore" data-i18n="spazi-link">Richiedi informazioni →</a>
+    </div>
+    <div class="spaces-grid">
+      <a class="space-card large reveal" href="villa.html">
+        <div class="space-card-bg bg-villa">
+          <img src="assets/images/IMG_6673.jpeg" alt="La Villa — sala ingresso con piattaia, piatti blu" />
+        </div>
+        <div class="space-card-overlay"></div>
+        <div class="space-card-body">
+          <div class="space-card-eyebrow" data-i18n="villa-eyebrow">Interno &middot; 1000 mq &middot; 3 piani</div>
+          <div class="space-card-title" data-i18n="villa-title">La Villa Nobiliare</div>
+        </div>
+      </a>
+      <a class="space-card reveal reveal-delay-1" href="giardino.html">
+        <div class="space-card-bg bg-giardino">
+          <img src="assets/images/IMG_3283.jpeg" alt="Il Giardino all'Italiana" />
+        </div>
+        <div class="space-card-overlay"></div>
+        <div class="space-card-body">
+          <div class="space-card-eyebrow" data-i18n="giardino-eyebrow">Esterno &middot; 4.000 mq</div>
+          <div class="space-card-title" data-i18n="giardino-title">Il Giardino all'Italiana</div>
+        </div>
+      </a>
+      <div class="space-card reveal reveal-delay-2">
+        <div class="space-card-bg bg-chiesa">
+          <img src="assets/images/051.JPG" alt="La Chiesa di Santa Margherita" />
+        </div>
+        <div class="space-card-overlay"></div>
+        <div class="space-card-body">
+          <div class="space-card-eyebrow" data-i18n="chiesa-eyebrow">Consacrata &middot; XVII sec.</div>
+          <div class="space-card-title" data-i18n="chiesa-title">Chiesa di Santa Margherita</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EVENTI ───────────────────────────────────────── -->
+  <section class="eventi" id="eventi">
+    <div class="section-header reveal">
+      <p class="label" data-i18n="eventi-label">Per ogni occasione</p>
+      <h2 class="section-title" data-text-reveal data-i18n="eventi-title">Ogni celebrazione merita<br>un luogo <em>straordinario</em></h2>
+    </div>
+    <div class="eventi-grid">
+      <div class="event-item reveal">
+        <div class="event-glyph"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg></div>
+        <div class="event-name" data-i18n="matrimoni-name">Matrimoni</div>
+        <div class="event-desc" data-i18n="matrimoni-desc">Cerimonia in chiesa consacrata e ricevimento nel giardino storico</div>
+      </div>
+      <div class="event-item reveal reveal-delay-1">
+        <div class="event-glyph"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12h.01"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M22 13a18.15 18.15 0 0 1-20 0"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></div>
+        <div class="event-name" data-i18n="corporate-name">Corporate</div>
+        <div class="event-desc" data-i18n="corporate-desc">Team building, presentazioni e cene di gala in location esclusiva</div>
+      </div>
+      <div class="event-item reveal reveal-delay-2">
+        <div class="event-glyph"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></div>
+        <div class="event-name" data-i18n="feste-name">Feste Private</div>
+        <div class="event-desc" data-i18n="feste-desc">Compleanni, lauree, battesimi e ogni ricorrenza speciale</div>
+      </div>
+      <div class="event-item reveal reveal-delay-3">
+        <div class="event-glyph"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg></div>
+        <div class="event-name" data-i18n="shooting-name">Shooting</div>
+        <div class="event-desc" data-i18n="shooting-desc">Location esclusiva per fotografia, moda e produzioni video</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── GALLERIA ───────────────────────────────────────── -->
+  <section class="galleria" id="galleria">
+    <div class="section-header reveal" style="margin-bottom:40px;">
+      <p class="label" data-i18n="galleria-label">Il Giardino &amp; Gli Interni</p>
+      <h2 class="section-title" data-text-reveal data-i18n="galleria-title">Un patrimonio di <em>bellezza</em></h2>
+    </div>
+
+    <!-- Riga superiore: 3 foto, quella di sinistra più grande -->
+    <div class="galleria-grid galleria-grid-top reveal">
+      <div class="gal-item tall img-wipe">
+        <img src="assets/images/IMG_0366.JPG" alt="Facciata e giardino formale — veduta dal parterre" />
+      </div>
+      <div class="gal-item tall img-wipe">
+        <img src="assets/images/IMG_4825.JPG" alt="Ingresso con vetri colorati e giardino" />
+      </div>
+      <div class="gal-item tall img-wipe">
+        <img src="assets/images/IMG_6254.JPEG" alt="Giardino con alberi e prato verde" />
+      </div>
+    </div>
+
+    <!-- Riga inferiore: 4 foto più piccole -->
+    <div class="galleria-grid galleria-grid-bottom reveal reveal-delay-1">
+      <div class="gal-item sq img-wipe">
+        <img src="assets/images/IMG_6662.jpeg" alt="Salone affrescato con arredi antichi" />
+      </div>
+      <div class="gal-item sq img-wipe">
+        <img src="assets/images/IMG_4822.JPG" alt="Giardino — vialetto con siepi e rose" />
+      </div>
+      <div class="gal-item sq img-wipe">
+        <img src="assets/images/IMG_6678.jpeg" alt="Sala con scala" />
+      </div>
+      <div class="gal-item sq img-wipe">
+        <img src="assets/images/IMG_4819.JPG" alt="Panchina con rosa" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EVENTI FOTO ──────────────────────────────────── -->
+  <section class="eventi-foto" id="eventi-foto">
+    <div class="eventi-foto-inner">
+      <div class="eventi-foto-text reveal">
+        <p class="label" data-i18n="ef-label">I Tuoi Momenti</p>
+        <h2 class="eventi-foto-heading" data-text-reveal data-i18n="ef-heading">
+          Ogni evento diventa<br>
+          un <em>ricordo</em> indelebile
+        </h2>
+        <p class="eventi-foto-body" data-i18n="ef-body">
+          Dal ricevimento all'aperto tra i limoni e le rose del giardino, alla cena di gala nei saloni affrescati: Villa La Margherita offre una cornice unica per ogni tipo di celebrazione. Il nostro staff si occupa di ogni dettaglio per garantire un'esperienza impeccabile.
+        </p>
+        <a href="#contatti" class="btn btn-ghost-dark" data-i18n="ef-btn">Organizza il tuo evento</a>
+      </div>
+      <div class="eventi-foto-imgs reveal reveal-delay-2">
+        <div class="ef-img wide img-wipe">
+          <img src="assets/images/IMG_4821.JPG" alt="Giardino allestito con tavoli e ombrelloni per ricevimento" />
+        </div>
+        <div class="ef-img img-wipe">
+          <img src="assets/images/IMG_4832.JPG" alt="Tavola apparecchiata con fiori e limoni" />
+        </div>
+        <div class="ef-img img-wipe">
+          <img src="assets/images/IMG_9954.JPG" alt="Tavolo con posate e giardino sullo sfondo" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STORIA ───────────────────────────────────────── -->
+  <section class="storia" id="storia">
+    <div class="storia-inner">
+      <blockquote class="storia-quote reveal" data-i18n="storia-quote">
+        Villa La Margherita porta con sé secoli di storia che, camminando per le stanze della casa, è tuttora visibile e immacolata.
+      </blockquote>
+      <div class="reveal reveal-delay-2">
+        <p class="storia-since" data-i18n="storia-since">Dal XVII Secolo</p>
+        <p class="storia-body" data-i18n="storia-body">
+          Residenza estiva dei Conti Fecia di Cossato, la villa custodisce le memorie della Famiglia, tra cui il Conte Carlo — medaglia d'oro al valor militare come sommergibilista durante la Seconda Guerra Mondiale — e del Conte Luigi, Ambasciatore dello Stato Italiano. Lo stemma di Famiglia porta tre grappoli d'uva, simbolo dei vigneti che ancora circondano la proprietà.
+        </p>
+        <a href="#contatti" class="text-link" style="color: var(--ink-soft);" data-i18n="storia-link">Scopri la storia →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTATTI ─────────────────────────────────────── -->
+  <section class="contact" id="contatti">
+    <p class="label reveal" style="color: var(--gold);" data-i18n="contact-label">Il tuo evento a Villa La Margherita</p>
+    <h2 class="contact-title reveal" data-text-reveal data-i18n="contact-title">
+      Inizia a immaginare<br>il tuo giorno speciale
+    </h2>
+    <p class="contact-sub reveal" data-i18n="contact-sub">
+      Ogni evento è unico. Contattaci per un preventivo personalizzato e senza impegno.
+    </p>
+    <div class="contact-actions reveal">
+      <a href="mailto:info@villalamargherita.com" class="btn btn-gold" data-i18n="contact-btn-email">Richiedi Preventivo</a>
+      <a href="tel:+393317233169" class="btn btn-outline-cream" data-i18n="contact-btn-tel">Chiamaci</a>
+    </div>
+    <div class="contact-details reveal">
+      <div class="contact-detail">
+        <div class="contact-detail-label" data-i18n="contact-email-label">Email</div>
+        <div class="contact-detail-value">
+          <a href="mailto:info@villalamargherita.com">info@villalamargherita.com</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label" data-i18n="contact-tel-label">Telefono</div>
+        <div class="contact-detail-value">
+          <a href="tel:+393317233169">+39 331 723 3169</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label" data-i18n="contact-stagione-label">Stagione</div>
+        <div class="contact-detail-value" data-i18n="contact-stagione-val">Primavera · Estate · Autunno</div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label" data-i18n="contact-capienza-label">Capienza</div>
+        <div class="contact-detail-value" data-i18n="contact-capienza-val">250+ ospiti · Giardino</div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label" data-i18n="contact-dove-label">Dove</div>
+        <div class="contact-detail-value">Cossato (BI), Piemonte</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ───────────────────────────────────────── -->
+  <footer class="footer">
+    <a href="#" class="footer-logo">Villa La Margherita</a>
+    <p class="footer-copy">&copy; 2026 Conti Fecia di Cossato &middot; Cossato, Biella &middot; P.IVA da inserire</p>
+    <button class="footer-lang" id="lang-toggle-footer">IT · EN</button>
+  </footer>
+
+  <!-- ─── SCRIPTS ──────────────────────────────────────── -->
+  <script>
+    // Page curtain transition
+    (function() {
+      const curtain = document.getElementById('page-curtain');
+
+      setTimeout(() => {
+        curtain.style.transition = 'transform 0.7s cubic-bezier(0.77, 0, 0.18, 1)';
+        curtain.style.transform = 'translateY(-100%)';
+      }, 120);
+
+      document.addEventListener('click', e => {
+        const a = e.target.closest('a[href]');
+        if (!a) return;
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || a.target === '_blank') return;
+        e.preventDefault();
+        curtain.style.transition = 'transform 0.55s cubic-bezier(0.77, 0, 0.18, 1)';
+        curtain.style.transform = 'translateY(0)';
+        setTimeout(() => { window.location.href = href; }, 580);
+      });
+    })();
+
+    // Scroll progress nav
+    (function() {
+      const sections = [
+        { id: 'hero-section', label: 'Villa'      },
+        { id: 'la-villa',     label: 'La Villa'   },
+        { id: 'spazi',        label: 'Gli Spazi'  },
+        { id: 'eventi',       label: 'Gli Eventi' },
+        { id: 'galleria',     label: 'Galleria'   },
+        { id: 'eventi-foto',  label: 'Momenti'    },
+        { id: 'storia',       label: 'La Storia'  },
+        { id: 'contatti',     label: 'Contatti'   },
+      ];
+
+      const nav = document.createElement('nav');
+      nav.id = 'scroll-nav';
+      nav.setAttribute('aria-label', 'Sezioni pagina');
+
+      sections.forEach(({ id, label }) => {
+        const btn = document.createElement('button');
+        btn.className = 'sn-item';
+        btn.dataset.target = id;
+        btn.setAttribute('aria-label', label);
+        btn.innerHTML = `<span class="sn-label">${label}</span><span class="sn-dot"></span>`;
+        btn.addEventListener('click', () => {
+          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        });
+        nav.appendChild(btn);
+      });
+
+      document.body.appendChild(nav);
+
+      let currentActive = null;
+
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const btn = nav.querySelector(`[data-target="${entry.target.id}"]`);
+          if (!btn) return;
+          if (currentActive) currentActive.classList.remove('active');
+          currentActive = btn;
+          currentActive.classList.add('active');
+        });
+      }, { rootMargin: '-38% 0px -58% 0px', threshold: 0 });
+
+      sections.forEach(({ id }) => {
+        const el = document.getElementById(id);
+        if (el) obs.observe(el);
+      });
+    })();
+
+    // Sticky nav shadow on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Text reveal — lettera per lettera
+    (function() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      document.querySelectorAll('[data-text-reveal]').forEach(el => {
+        if (prefersReduced) { el.classList.add('chars-visible'); return; }
+        el.setAttribute('aria-label', el.textContent.trim().replace(/\s+/g, ' '));
+        let charIndex = 0;
+
+        function wrapChars(node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            if (!text.replace(/\s/g, '')) return;
+            const frag = document.createDocumentFragment();
+            for (const ch of text) {
+              if (/\s/.test(ch)) {
+                frag.appendChild(document.createTextNode(ch));
+              } else {
+                const span = document.createElement('span');
+                span.className = 'text-reveal-char';
+                span.style.setProperty('--char-i', charIndex++);
+                span.setAttribute('aria-hidden', 'true');
+                span.textContent = ch;
+                frag.appendChild(span);
+              }
+            }
+            node.parentNode.replaceChild(frag, node);
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            Array.from(node.childNodes).forEach(wrapChars);
+          }
+        }
+
+        Array.from(el.childNodes).forEach(wrapChars);
+      });
+
+      const textObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('chars-visible');
+            textObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('[data-text-reveal]').forEach(el => textObs.observe(el));
+    })();
+
+    // Counter animato — .stat-num
+    (function() {
+      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function parseNum(text) {
+        const stripped = text.replace(/\./g, '').replace(/[^0-9]/g, '');
+        const n = parseInt(stripped, 10);
+        return isNaN(n) ? null : n;
+      }
+
+      function formatNum(n, original) {
+        const useThousandsDot = /\d\.\d{3}/.test(original);
+        const suffix = original.match(/[^0-9.]+$/)?.[0] ?? '';
+        let s = useThousandsDot
+          ? n.toLocaleString('it-IT')
+          : n.toString();
+        return s + suffix;
+      }
+
+      function runCounter(el, target, original) {
+        const duration = 1800;
+        const start = performance.now();
+        (function tick(now) {
+          const p = Math.min((now - start) / duration, 1);
+          el.textContent = formatNum(Math.round(easeOut(p) * target), original);
+          if (p < 1) requestAnimationFrame(tick);
+        })(start);
+      }
+
+      const counterObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          counterObs.unobserve(entry.target);
+          const el = entry.target;
+          const original = el.dataset.original;
+          const target = parseNum(original);
+          if (target !== null) {
+            el.textContent = '0';
+            requestAnimationFrame(now => runCounter(el, target, original));
+          } else {
+            el.classList.add('stat-static-visible');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.stat-num').forEach(el => {
+        el.dataset.original = el.textContent.trim();
+        counterObs.observe(el);
+      });
+    })();
+
+    // Image wipe — barra oro
+    (function() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      let batchTimer = null;
+      const batch = [];
+
+      const wipeObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          wipeObs.unobserve(entry.target);
+          batch.push(entry.target);
+        });
+        clearTimeout(batchTimer);
+        batchTimer = setTimeout(() => {
+          batch.splice(0).forEach((el, i) => {
+            setTimeout(() => el.classList.add('wipe-done'), i * 90);
+          });
+        }, 0);
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.img-wipe').forEach(el => wipeObs.observe(el));
+    })();
+
+    // Hero slideshow
+    (function() {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots   = document.querySelectorAll('.hero-dot');
+      let current  = 0;
+      let timer;
+
+      function goTo(index) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = index;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      function next() {
+        goTo((current + 1) % slides.length);
+      }
+
+      function startTimer() {
+        timer = setInterval(next, 5000);
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          clearInterval(timer);
+          goTo(i);
+          startTimer();
+        });
+      });
+
+      startTimer();
+    })();
+
+    // Lightbox
+    (function() {
+      const lb      = document.getElementById('lightbox');
+      const lbImg   = document.getElementById('lightbox-img');
+      const lbClose = document.getElementById('lightbox-close');
+      const lbPrev  = document.getElementById('lb-prev');
+      const lbNext  = document.getElementById('lb-next');
+      const lbCount = document.getElementById('lb-counter');
+
+      // Collect all images except logo and lightbox itself
+      const EXCLUDE = '.nav-logo img, #lightbox img';
+      let images = [];
+      let current = 0;
+
+      function buildIndex() {
+        images = Array.from(document.querySelectorAll('img')).filter(img => !img.closest('.nav-logo') && img.id !== 'lightbox-img');
+      }
+
+      function open(index) {
+        current = index;
+        const img = images[current];
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lbCount.textContent = (current + 1) + ' / ' + images.length;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lb.classList.remove('open');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+
+      function prev() { open((current - 1 + images.length) % images.length); }
+      function next() { open((current + 1) % images.length); }
+
+      buildIndex();
+
+      images.forEach((img, i) => {
+        img.style.cursor = 'none';
+        img.setAttribute('data-cursor-grow', '');
+        img.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          buildIndex();
+          open(images.indexOf(img));
+        });
+      });
+
+      lbClose.addEventListener('click', close);
+      lbPrev.addEventListener('click', prev);
+      lbNext.addEventListener('click', next);
+
+      lb.addEventListener('click', e => {
+        if (e.target === lb) close();
+      });
+
+      document.addEventListener('keydown', e => {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape')     close();
+        if (e.key === 'ArrowLeft')  prev();
+        if (e.key === 'ArrowRight') next();
+      });
+    })();
+
+    // Custom cursor
+    (function() {
+      const dot  = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      let rx = window.innerWidth / 2, ry = window.innerHeight / 2;
+      let mx = rx, my = ry;
+      let raf;
+
+      const HOVER_SELECTORS = 'a, button, [role="button"], label, input, select, textarea, img[onclick], .hero-dot, [data-cursor-grow]';
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function loop() {
+        rx = lerp(rx, mx, 0.18);
+        ry = lerp(ry, my, 0.18);
+        dot.style.left  = mx + 'px';
+        dot.style.top   = my + 'px';
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        raf = requestAnimationFrame(loop);
+      }
+
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+      }, { passive: true });
+
+      document.addEventListener('mouseover', e => {
+        if (e.target.closest(HOVER_SELECTORS)) {
+          ring.classList.add('expanded');
+          dot.style.transform = 'translate(-50%,-50%) scale(0.4)';
+        }
+      });
+
+      document.addEventListener('mouseout', e => {
+        if (e.target.closest(HOVER_SELECTORS)) {
+          ring.classList.remove('expanded');
+          dot.style.transform = 'translate(-50%,-50%) scale(1)';
+        }
+      });
+
+      document.addEventListener('mousedown', () => {
+        dot.style.transform = 'translate(-50%,-50%) scale(0.6)';
+      });
+      document.addEventListener('mouseup', () => {
+        dot.style.transform = 'translate(-50%,-50%) scale(1)';
+      });
+
+      document.addEventListener('mouseleave', () => {
+        dot.style.opacity  = '0';
+        ring.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', () => {
+        dot.style.opacity  = '1';
+        ring.style.opacity = '0.7';
+      });
+
+      raf = requestAnimationFrame(loop);
+    })();
+
+    // Magnetic buttons
+    (function() {
+      if (window.matchMedia('(hover: none)').matches) return;
+
+      const RADIUS   = 88;   // px — raggio del campo magnetico
+      const STRENGTH = 0.38; // frazione dello spostamento (0 = nessuno, 1 = completo)
+
+      const btns = Array.from(document.querySelectorAll('.btn'));
+
+      window.addEventListener('mousemove', e => {
+        btns.forEach(btn => {
+          const r  = btn.getBoundingClientRect();
+          const cx = r.left + r.width  / 2;
+          const cy = r.top  + r.height / 2;
+          const dx = e.clientX - cx;
+          const dy = e.clientY - cy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < RADIUS) {
+            const pull = (1 - dist / RADIUS) * STRENGTH;
+            btn.style.transition = 'transform 0.12s ease';
+            btn.style.transform  = `translate(${dx * pull}px, ${dy * pull}px)`;
+            btn.dataset.inField  = '1';
+          } else if (btn.dataset.inField) {
+            btn.style.transition = 'transform 0.55s cubic-bezier(0.23, 1, 0.32, 1)';
+            btn.style.transform  = 'translate(0,0)';
+            delete btn.dataset.inField;
+          }
+        });
+      }, { passive: true });
+    })();
+
+    // ─── Internazionalizzazione IT / EN ─────────────────────
+    (function() {
+      const translations = {
+        it: {
+          'nav-villa': 'La Villa', 'nav-spazi': 'Gli Spazi', 'nav-eventi': 'Gli Eventi',
+          'nav-storia': 'La Storia', 'nav-contatti': 'Contatti', 'nav-cta': 'Richiedi Preventivo',
+          'hero-eyebrow': 'Dal XVII Secolo &middot; Cossato, Biella',
+          'hero-title': 'Villa<br><em>La Margherita</em>',
+          'hero-sub': 'Un luogo senza tempo per celebrare ciò che conta',
+          'hero-btn-primary': 'Scopri la Villa', 'hero-btn-ghost': 'Richiedi Preventivo',
+          'intro-label': 'La Villa',
+          'intro-heading': 'Quattro secoli di storia<br>a disposizione dei <em>tuoi</em> eventi',
+          'intro-body': 'Residenza estiva dei Conti Fecia di Cossato sin dalle origini, Villa La Margherita conserva intatta l\'eleganza sobria del Piemonte nobiliare. Saloni affrescati, soffitti a cassettoni, un giardino all\'italiana di 4.000 mq e una chiesa consacrata: ogni spazio racconta secoli di storia e offre una cornice irripetibile.',
+          'intro-link': 'Esplora gli spazi →',
+          'stat-villa': 'mq di Villa', 'stat-giardino': 'mq di Giardino',
+          'stat-ospiti': 'Ospiti seduti', 'stat-secolo': 'Secolo',
+          'intro-caption': 'Il salone affrescato',
+          'spazi-label': 'Gli Spazi', 'spazi-title': 'Tre <em>luoghi</em>, una storia',
+          'spazi-link': 'Richiedi informazioni →',
+          'villa-eyebrow': 'Interno &middot; 1000 mq &middot; 3 piani', 'villa-title': 'La Villa Nobiliare',
+          'giardino-eyebrow': 'Esterno &middot; 4.000 mq', 'giardino-title': 'Il Giardino all\'Italiana',
+          'chiesa-eyebrow': 'Consacrata &middot; XVII sec.', 'chiesa-title': 'Chiesa di Santa Margherita',
+          'eventi-label': 'Per ogni occasione',
+          'eventi-title': 'Ogni celebrazione merita<br>un luogo <em>straordinario</em>',
+          'matrimoni-name': 'Matrimoni',
+          'matrimoni-desc': 'Cerimonia in chiesa consacrata e ricevimento nel giardino storico',
+          'corporate-name': 'Corporate',
+          'corporate-desc': 'Team building, presentazioni e cene di gala in location esclusiva',
+          'feste-name': 'Feste Private',
+          'feste-desc': 'Compleanni, lauree, battesimi e ogni ricorrenza speciale',
+          'shooting-name': 'Shooting',
+          'shooting-desc': 'Location esclusiva per fotografia, moda e produzioni video',
+          'galleria-label': 'Il Giardino &amp; Gli Interni',
+          'galleria-title': 'Un patrimonio di <em>bellezza</em>',
+          'ef-label': 'I Tuoi Momenti',
+          'ef-heading': 'Ogni evento diventa<br>un <em>ricordo</em> indelebile',
+          'ef-body': 'Dal ricevimento all\'aperto tra i limoni e le rose del giardino, alla cena di gala nei saloni affrescati: Villa La Margherita offre una cornice unica per ogni tipo di celebrazione. Il nostro staff si occupa di ogni dettaglio per garantire un\'esperienza impeccabile.',
+          'ef-btn': 'Organizza il tuo evento',
+          'storia-quote': 'Villa La Margherita porta con sé secoli di storia che, camminando per le stanze della casa, è tuttora visibile e immacolata.',
+          'storia-since': 'Dal XVII Secolo',
+          'storia-body': 'Residenza estiva dei Conti Fecia di Cossato, la villa custodisce le memorie della Famiglia, tra cui il Conte Carlo — medaglia d\'oro al valor militare come sommergibilista durante la Seconda Guerra Mondiale — e del Conte Luigi, Ambasciatore dello Stato Italiano. Lo stemma di Famiglia porta tre grappoli d\'uva, simbolo dei vigneti che ancora circondano la proprietà.',
+          'storia-link': 'Scopri la storia →',
+          'contact-label': 'Il tuo evento a Villa La Margherita',
+          'contact-title': 'Inizia a immaginare<br>il tuo giorno speciale',
+          'contact-sub': 'Ogni evento è unico. Contattaci per un preventivo personalizzato e senza impegno.',
+          'contact-btn-email': 'Richiedi Preventivo', 'contact-btn-tel': 'Chiamaci',
+          'contact-email-label': 'Email', 'contact-tel-label': 'Telefono',
+          'contact-stagione-label': 'Stagione', 'contact-stagione-val': 'Primavera · Estate · Autunno',
+          'contact-capienza-label': 'Capienza', 'contact-capienza-val': '250+ ospiti · Giardino',
+          'contact-dove-label': 'Dove',
+        },
+        en: {
+          'nav-villa': 'The Villa', 'nav-spazi': 'The Spaces', 'nav-eventi': 'Events',
+          'nav-storia': 'History', 'nav-contatti': 'Contact', 'nav-cta': 'Request a Quote',
+          'hero-eyebrow': 'Since the XVII Century &middot; Cossato, Biella',
+          'hero-title': 'Villa<br><em>La Margherita</em>',
+          'hero-sub': 'A timeless place to celebrate what matters',
+          'hero-btn-primary': 'Discover the Villa', 'hero-btn-ghost': 'Request a Quote',
+          'intro-label': 'The Villa',
+          'intro-heading': 'Four centuries of history<br>at the service of <em>your</em> events',
+          'intro-body': 'Summer residence of the Counts Fecia di Cossato since its origins, Villa La Margherita preserves intact the sober elegance of Piedmontese nobility. Frescoed halls, coffered ceilings, a 4,000 sqm Italian garden and a consecrated church: every space tells centuries of history and offers an unparalleled setting.',
+          'intro-link': 'Explore the spaces →',
+          'stat-villa': 'sqm of Villa', 'stat-giardino': 'sqm of Garden',
+          'stat-ospiti': 'Seated guests', 'stat-secolo': 'Century',
+          'intro-caption': 'The frescoed hall',
+          'spazi-label': 'The Spaces', 'spazi-title': 'Three <em>spaces</em>, one story',
+          'spazi-link': 'Request information →',
+          'villa-eyebrow': 'Interior &middot; 1,000 sqm &middot; 3 floors', 'villa-title': 'The Noble Villa',
+          'giardino-eyebrow': 'Exterior &middot; 4,000 sqm', 'giardino-title': 'The Italian Garden',
+          'chiesa-eyebrow': 'Consecrated &middot; XVII c.', 'chiesa-title': 'Church of Santa Margherita',
+          'eventi-label': 'For every occasion',
+          'eventi-title': 'Every celebration deserves<br>an <em>extraordinary</em> venue',
+          'matrimoni-name': 'Weddings',
+          'matrimoni-desc': 'Ceremony in a consecrated church and reception in the historic garden',
+          'corporate-name': 'Corporate',
+          'corporate-desc': 'Team building, presentations and gala dinners in an exclusive venue',
+          'feste-name': 'Private Parties',
+          'feste-desc': 'Birthdays, graduations, christenings and every special occasion',
+          'shooting-name': 'Photo Shoots',
+          'shooting-desc': 'Exclusive venue for photography, fashion and video productions',
+          'galleria-label': 'The Garden &amp; The Interiors',
+          'galleria-title': 'A heritage of <em>beauty</em>',
+          'ef-label': 'Your Moments',
+          'ef-heading': 'Every event becomes<br>an <em>unforgettable</em> memory',
+          'ef-body': 'From the outdoor reception among the lemons and roses of the garden, to the gala dinner in the frescoed halls: Villa La Margherita offers a unique setting for every type of celebration. Our staff takes care of every detail to ensure an impeccable experience.',
+          'ef-btn': 'Plan your event',
+          'storia-quote': 'Villa La Margherita carries with it centuries of history that, walking through the rooms of the house, is still visible and immaculate.',
+          'storia-since': 'Since the XVII Century',
+          'storia-body': 'Summer residence of the Counts Fecia di Cossato, the villa preserves the memories of the Family, including Count Carlo — gold medal for military valour as a submariner during World War II — and Count Luigi, Ambassador of the Italian State. The Family coat of arms bears three bunches of grapes, symbol of the vineyards that still surround the property.',
+          'storia-link': 'Discover the history →',
+          'contact-label': 'Your event at Villa La Margherita',
+          'contact-title': 'Start imagining<br>your special day',
+          'contact-sub': 'Every event is unique. Contact us for a personalised, no-obligation quote.',
+          'contact-btn-email': 'Request a Quote', 'contact-btn-tel': 'Call Us',
+          'contact-email-label': 'Email', 'contact-tel-label': 'Phone',
+          'contact-stagione-label': 'Season', 'contact-stagione-val': 'Spring · Summer · Autumn',
+          'contact-capienza-label': 'Capacity', 'contact-capienza-val': '250+ guests · Garden',
+          'contact-dove-label': 'Location',
+        }
+      };
+
+      const scrollNavLabels = {
+        it: { 'hero-section': 'Villa', 'la-villa': 'La Villa', 'spazi': 'Gli Spazi', 'eventi': 'Gli Eventi', 'galleria': 'Galleria', 'eventi-foto': 'Momenti', 'storia': 'La Storia', 'contatti': 'Contatti' },
+        en: { 'hero-section': 'Villa', 'la-villa': 'The Villa', 'spazi': 'The Spaces', 'eventi': 'Events', 'galleria': 'Gallery', 'eventi-foto': 'Moments', 'storia': 'History', 'contatti': 'Contact' }
+      };
+
+      function rewrapTextReveal(el, html) {
+        el.innerHTML = html;
+        el.setAttribute('aria-label', el.textContent.trim().replace(/\s+/g, ' '));
+        let charIndex = 0;
+        function wrapChars(node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            if (!text.replace(/\s/g, '')) return;
+            const frag = document.createDocumentFragment();
+            for (const ch of text) {
+              if (/\s/.test(ch)) {
+                frag.appendChild(document.createTextNode(ch));
+              } else {
+                const span = document.createElement('span');
+                span.className = 'text-reveal-char';
+                span.style.setProperty('--char-i', charIndex++);
+                span.setAttribute('aria-hidden', 'true');
+                span.textContent = ch;
+                frag.appendChild(span);
+              }
+            }
+            node.parentNode.replaceChild(frag, node);
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            Array.from(node.childNodes).forEach(wrapChars);
+          }
+        }
+        Array.from(el.childNodes).forEach(wrapChars);
+        el.classList.add('chars-visible');
+      }
+
+      let currentLang = localStorage.getItem('lang') || 'it';
+
+      function setLang(lang) {
+        currentLang = lang;
+        localStorage.setItem('lang', lang);
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.dataset.i18n;
+          const text = translations[lang][key];
+          if (text === undefined) return;
+          if (el.hasAttribute('data-text-reveal')) {
+            rewrapTextReveal(el, text);
+          } else {
+            el.innerHTML = text;
+          }
+        });
+
+        // Scroll nav labels
+        const scrollNav = document.getElementById('scroll-nav');
+        if (scrollNav) {
+          scrollNav.querySelectorAll('.sn-item').forEach(btn => {
+            const target = btn.dataset.target;
+            const label = scrollNavLabels[lang][target];
+            if (label) btn.querySelector('.sn-label').textContent = label;
+          });
+        }
+
+        // Toggle button labels
+        const isEN = lang === 'en';
+        document.querySelectorAll('#lang-toggle, #lang-toggle-footer').forEach(btn => {
+          btn.textContent = isEN ? 'EN · IT' : 'IT · EN';
+        });
+      }
+
+      // Wire up toggle buttons
+      document.querySelectorAll('#lang-toggle, #lang-toggle-footer').forEach(btn => {
+        btn.addEventListener('click', () => setLang(currentLang === 'it' ? 'en' : 'it'));
+      });
+
+      // Apply saved language on load
+      if (currentLang === 'en') setLang('en');
+    })();
+  </script>
+
+</body>
+</html>
