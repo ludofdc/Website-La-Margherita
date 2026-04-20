@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Nostra Storia — Villa La Margherita, Cossato</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    :root {
+      --gold:         #B8972A;
+      --gold-light:   #D4AF4A;
+      --gold-pale:    #F2E8C8;
+      --cream:        #FAF7F0;
+      --cream-dark:   #F0EBE0;
+      --ink:          #1C1A14;
+      --ink-soft:     #3D3928;
+      --stone:        #7A7260;
+      --stone-light:  #C8C0A8;
+      --stone-pale:   #E8E2D4;
+      --font-serif: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+      --font-sans:  'Jost', system-ui, sans-serif;
+      --max-w: 1200px;
+      --pad-x: clamp(24px, 5vw, 80px);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HEADER ─── */
+    .page-header {
+      background: var(--ink);
+      padding: clamp(48px, 8vh, 80px) var(--pad-x) clamp(40px, 6vh, 64px);
+      text-align: center;
+      position: relative;
+    }
+    .back-link {
+      position: absolute;
+      top: 28px;
+      left: var(--pad-x);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--stone-light);
+      text-decoration: none;
+      transition: color 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .back-link:hover { color: var(--gold-light); }
+    .back-link::before { content: '←'; font-size: 14px; }
+    .page-eyebrow {
+      font-size: 10px;
+      font-weight: 200;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 16px;
+      animation: fadeUp 0.8s ease both;
+      animation-delay: 0.1s;
+    }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .page-title em { font-style: italic; color: var(--gold-light); }
+    .page-desc {
+      font-size: 13px;
+      font-weight: 200;
+      color: var(--stone-light);
+      letter-spacing: 0.5px;
+      max-width: 560px;
+      margin: 0 auto;
+      animation: fadeUp 0.8s ease both;
+      animation-delay: 0.45s;
+    }
+
+    /* ─── MOTTO ─── */
+    .motto-section {
+      padding: clamp(56px, 10vh, 96px) var(--pad-x) clamp(40px, 6vh, 64px);
+      max-width: calc(var(--max-w) + var(--pad-x) * 2);
+      margin: 0 auto;
+      text-align: center;
+    }
+    .motto-latin {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 3.5vw, 38px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .motto-translation {
+      font-size: 13px;
+      font-weight: 200;
+      color: var(--stone);
+      letter-spacing: 0.5px;
+    }
+    .motto-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin: 32px auto;
+      opacity: 0.5;
+    }
+
+    /* ─── STORY SECTIONS ─── */
+    .story-section {
+      padding: clamp(40px, 6vh, 64px) var(--pad-x);
+      max-width: calc(var(--max-w) + var(--pad-x) * 2);
+      margin: 0 auto;
+    }
+    .story-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: clamp(40px, 6vw, 96px);
+      align-items: start;
+      padding-bottom: clamp(40px, 6vh, 64px);
+      border-bottom: 1px solid var(--stone-pale);
+    }
+    .story-inner:last-child { border-bottom: none; }
+    .story-label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding-top: 6px;
+    }
+    .story-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .story-heading em { font-style: italic; color: var(--ink-soft); }
+    .story-body p {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .story-body p:last-child { margin-bottom: 0; }
+    .story-date {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--stone);
+      border-left: 2px solid var(--gold);
+      padding-left: 12px;
+      margin-bottom: 20px;
+    }
+
+    /* ─── CLOSING ─── */
+    .closing-section {
+      background: var(--ink);
+      padding: clamp(56px, 10vh, 96px) var(--pad-x);
+      text-align: center;
+    }
+    .closing-text {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 2.8vw, 32px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      max-width: 720px;
+      margin: 0 auto 32px;
+      line-height: 1.5;
+    }
+    .closing-cta {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .closing-cta:hover { color: var(--gold-light); }
+
+    /* ─── FOOTER ─── */
+    .page-footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(250,247,240,0.07);
+      padding: 28px var(--pad-x);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(250,247,240,0.35);
+      text-decoration: none;
+    }
+    .footer-copy {
+      font-size: 10px;
+      font-weight: 200;
+      color: rgba(250,247,240,0.2);
+      letter-spacing: 0.5px;
+    }
+    .footer-cta {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .footer-cta:hover { color: var(--gold-light); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .text-reveal-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(0.35em);
+      filter: blur(5px);
+      transition:
+        opacity   0.5s ease,
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        filter    0.5s ease;
+      transition-delay: calc(var(--char-i) * 35ms);
+    }
+    [data-text-reveal].chars-visible .text-reveal-char {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .text-reveal-char { opacity: 1; transform: none; filter: none; transition: none; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.12s; }
+    .reveal-delay-2 { transition-delay: 0.24s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+
+    /* ─── PAGE CURTAIN ─── */
+    #page-curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      transform: translateY(0);
+      background: linear-gradient(175deg, #B8972A 0%, #D4AF4A 38%, #F2E8C8 78%, #FAF7F0 100%);
+    }
+    #page-curtain::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #8A6E1A 20%, #D4AF4A 50%, #8A6E1A 80%, transparent);
+    }
+
+    @media (max-width: 768px) {
+      .story-inner { grid-template-columns: 1fr; gap: 16px; }
+      .back-link { position: static; margin-bottom: 24px; display: inline-flex; }
+      .page-header { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="page-curtain"></div>
+
+  <!-- ─── HEADER ─── -->
+  <header class="page-header">
+    <a href="index.html" class="back-link">Torna al sito</a>
+    <p class="page-eyebrow">Dal XVII Secolo · Cossato, Biella</p>
+    <h1 class="page-title" data-text-reveal>La Nostra <em>Storia</em></h1>
+    <p class="page-desc">Quattro secoli di storia, un nome, una famiglia.</p>
+  </header>
+
+  <!-- ─── MOTTO ─── -->
+  <div class="motto-section reveal">
+    <p class="motto-latin">Ex optimo vino etiam faeces</p>
+    <p class="motto-translation">Anche dal vino più buono viene la feccia.</p>
+    <div class="motto-divider"></div>
+    <p class="motto-translation" style="max-width: 520px; margin: 0 auto; line-height: 1.8;">
+      Questo era il motto della famiglia Fecia di Cossato, un adagio che i conti portavano con ironia e orgoglio da secoli. Un nome che racconta già tutto: radici profonde, carattere, e la capacità di trovare bellezza anche nell'imperfezione.
+    </p>
+  </div>
+
+  <!-- ─── SECTIONS ─── -->
+  <div class="story-section">
+
+    <div class="story-inner">
+      <div class="reveal">
+        <p class="story-label">La Villa</p>
+      </div>
+      <div class="story-body reveal reveal-delay-1">
+        <p class="story-date">1630 — oggi</p>
+        <h2 class="story-heading">Quattro secoli<br>nelle stesse <em>mani</em></h2>
+        <p>Nel 1630 Gerolamo Fecia acquistò i terreni di Cossato e vi costruì la villa "Margherita". Da allora, per quasi quattro secoli, la villa è rimasta nelle mani della stessa famiglia — abitata, curata, vissuta di generazione in generazione.</p>
+        <p>Nel 1677 il nipote Carlo Bartolomeo ottenne il titolo di Conte di Cossato, legando per sempre il nome della famiglia a questo territorio. Da quel momento la villa divenne il cuore di un casato profondamente radicato nell'aristocrazia sabauda e nella storia del Piemonte.</p>
+      </div>
+    </div>
+
+    <div class="story-inner">
+      <div class="reveal">
+        <p class="story-label">Un eroe di famiglia</p>
+      </div>
+      <div class="story-body reveal reveal-delay-1">
+        <p class="story-date">1908 — 1944</p>
+        <h2 class="story-heading">Il Conte <em>Carlo</em><br>Fecia di Cossato</h2>
+        <p>Tra tutti i membri del casato, uno rimane impresso nella memoria collettiva: il conte Carlo Fecia di Cossato. Ufficiale della Regia Marina e sommergibilista tra i più valorosi della Seconda guerra mondiale, Carlo incarnò lo spirito della sua famiglia — coraggio, senso del dovere, fedeltà a ciò in cui credeva.</p>
+        <p>Morì nel 1944, a soli trentasei anni. Il suo ricordo vive ancora oggi a Cossato e in tutta Italia.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── CLOSING ─── -->
+  <div class="closing-section">
+    <p class="closing-text reveal">Quattro secoli di storia si respirano in ogni angolo di questa villa. Siamo onorati di condividerla con voi.</p>
+    <a href="index.html#contatti" class="closing-cta reveal reveal-delay-1">Richiedi Preventivo →</a>
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="page-footer">
+    <a href="index.html" class="footer-logo">Villa La Margherita</a>
+    <p class="footer-copy">&copy; 2026 Conti Fecia di Cossato &middot; Cossato, Biella</p>
+    <a href="index.html#contatti" class="footer-cta">Richiedi Preventivo →</a>
+  </footer>
+
+  <script>
+    (function() {
+      const curtain = document.getElementById('page-curtain');
+      setTimeout(() => {
+        curtain.style.transition = 'transform 0.7s cubic-bezier(0.77, 0, 0.18, 1)';
+        curtain.style.transform = 'translateY(-100%)';
+      }, 120);
+      document.addEventListener('click', e => {
+        const a = e.target.closest('a[href]');
+        if (!a) return;
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || a.target === '_blank') return;
+        e.preventDefault();
+        curtain.style.transition = 'transform 0.55s cubic-bezier(0.77, 0, 0.18, 1)';
+        curtain.style.transform = 'translateY(0)';
+        setTimeout(() => { window.location.href = href; }, 580);
+      });
+    })();
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => observer.observe(el));
+
+    (function() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('[data-text-reveal]').forEach(el => {
+        if (prefersReduced) { el.classList.add('chars-visible'); return; }
+        el.setAttribute('aria-label', el.textContent.trim().replace(/\s+/g, ' '));
+        let charIndex = 0;
+        function wrapChars(node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            if (!text.replace(/\s/g, '')) return;
+            const frag = document.createDocumentFragment();
+            for (const ch of text) {
+              if (/\s/.test(ch)) {
+                frag.appendChild(document.createTextNode(ch));
+              } else {
+                const span = document.createElement('span');
+                span.className = 'text-reveal-char';
+                span.style.setProperty('--char-i', charIndex++);
+                span.setAttribute('aria-hidden', 'true');
+                span.textContent = ch;
+                frag.appendChild(span);
+              }
+            }
+            node.parentNode.replaceChild(frag, node);
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            Array.from(node.childNodes).forEach(wrapChars);
+          }
+        }
+        Array.from(el.childNodes).forEach(wrapChars);
+        requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('chars-visible')));
+      });
+    })();
+  </script>
+
+</body>
+</html>
