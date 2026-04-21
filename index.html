@@ -155,6 +155,49 @@
       line-height: 1;
     }
 
+    /* ─── WIP BANNER ──────────────────────────────────── */
+    #wip-banner {
+      background: var(--ink);
+      color: var(--stone-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 16px var(--pad-x);
+      font-size: 13px;
+      font-weight: 200;
+      letter-spacing: 0.5px;
+      position: relative;
+      transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+      overflow: hidden;
+      max-height: 80px;
+    }
+    #wip-banner.hidden {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      pointer-events: none;
+    }
+    #wip-banner p { margin: 0; }
+    #wip-banner a {
+      color: var(--gold-light);
+      text-decoration: none;
+    }
+    #wip-banner a:hover { color: var(--gold); }
+    #wip-close {
+      background: none;
+      border: none;
+      color: var(--stone-light);
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    #wip-close:hover { color: var(--cream); }
+
     /* ─── NAVIGATION ───────────────────────────────────── */
     .nav {
       position: sticky;
@@ -1288,6 +1331,12 @@
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
 
+  <!-- ─── BANNER ──────────────────────────────────────── -->
+  <div id="wip-banner">
+    <p>Site under construction &mdash; feedback welcome: Instagram DM or <a href="mailto:info@villalamargherita.com">info@villalamargherita.com</a></p>
+    <button id="wip-close" aria-label="Chiudi">&times;</button>
+  </div>
+
   <!-- ─── LIGHTBOX ────────────────────────────────────── -->
   <div id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizzazione immagine">
     <button id="lb-prev" class="lb-arrow" aria-label="Precedente">&#8592;</button>
@@ -1916,6 +1965,14 @@
         if (e.key === 'Escape')     close();
         if (e.key === 'ArrowLeft')  prev();
         if (e.key === 'ArrowRight') next();
+      });
+    })();
+
+    // WIP banner
+    (function() {
+      const banner = document.getElementById('wip-banner');
+      document.getElementById('wip-close').addEventListener('click', () => {
+        banner.classList.add('hidden');
       });
     })();
 
