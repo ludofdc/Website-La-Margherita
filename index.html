@@ -942,6 +942,129 @@
       .footer { flex-direction: column; text-align: center; gap: 10px; }
     }
 
+    /* ─── MOBILE NAV (hamburger) ───────────────────────── */
+    .nav-toggle { display: none; }
+    .nav-link-cta { display: none; }
+
+    @media (max-width: 900px) {
+      .nav-cta { display: none; }
+
+      .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 36px;
+        height: 36px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 6px;
+        margin-left: 12px;
+        z-index: 301;
+        flex-shrink: 0;
+      }
+      .nav-toggle span {
+        display: block;
+        width: 22px;
+        height: 1.5px;
+        background: var(--ink);
+        transform-origin: center;
+        transition: transform 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+      }
+      .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+      .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+      .nav-links {
+        display: flex !important;
+        position: fixed;
+        inset: 0;
+        background: var(--cream);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        z-index: 300;
+        transform: translateX(100%);
+        transition: transform 0.45s cubic-bezier(0.77, 0, 0.18, 1);
+        pointer-events: none;
+      }
+      .nav-links.open {
+        transform: translateX(0);
+        pointer-events: auto;
+      }
+      .nav-links li { list-style: none; }
+      .nav-links a {
+        font-family: var(--font-serif) !important;
+        font-size: 32px !important;
+        font-weight: 300 !important;
+        letter-spacing: 0.5px !important;
+        text-transform: none !important;
+        color: var(--ink) !important;
+      }
+      .nav-links a:hover { color: var(--gold) !important; }
+
+      .nav-link-cta {
+        display: block;
+        margin-top: 8px;
+      }
+      .nav-link-cta a {
+        font-family: var(--font-sans) !important;
+        font-size: 10px !important;
+        letter-spacing: 3px !important;
+        text-transform: uppercase !important;
+        color: var(--gold) !important;
+        border: 1px solid var(--gold);
+        padding: 14px 36px;
+      }
+    }
+
+    /* ─── MOBILE STYLES (≤ 768px) ─────────────────────── */
+    @media (max-width: 768px) {
+      body { overflow-x: hidden; }
+
+      /* Fix mid-word breaks: rende inline i singoli char dell'animazione */
+      .text-reveal-char {
+        display: inline !important;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+      }
+
+      /* Hero */
+      .hero-title { font-size: clamp(32px, 9vw, 48px); letter-spacing: 0; }
+      .hero-sub   { font-size: 11px; letter-spacing: 1.5px; }
+      .hero-dots  { bottom: 20px; right: 16px; }
+
+      /* Sezioni — font ridotti per evitare overflow */
+      .intro-heading      { font-size: clamp(24px, 7vw, 32px); }
+      .section-title      { font-size: clamp(26px, 7vw, 36px); }
+      .spaces-title       { font-size: clamp(26px, 7vw, 36px); }
+      .eventi-foto-heading{ font-size: clamp(24px, 7vw, 32px); }
+      .contact-title      { font-size: clamp(28px, 8vw, 42px); }
+      .storia-quote       { font-size: clamp(18px, 5vw, 24px); padding-left: 20px; }
+
+      /* Spaces — 1 colonna */
+      .spaces-grid { grid-template-columns: 1fr !important; height: auto !important; }
+      .space-card.large { grid-column: 1 !important; height: 260px !important; }
+      .space-card:not(.large) { height: 180px !important; }
+      .spaces-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .spaces-explore { display: none; }
+
+      /* Galleria */
+      .galleria-grid-top  { grid-template-columns: 1fr 1fr !important; }
+      .galleria-grid-top .gal-item:first-child { grid-column: 1 / -1 !important; }
+      .galleria-grid-bottom { grid-template-columns: 1fr 1fr !important; }
+
+      /* Padding eventi */
+      .event-item { padding: 28px 16px; }
+
+      /* Footer */
+      .footer { gap: 8px; }
+    }
+
     /* ─── CUSTOM CURSOR ────────────────────────────────── */
     body { cursor: none; }
     a, button, [role="button"], label, input, select, textarea { cursor: none; }
@@ -1185,10 +1308,14 @@
       <li><a href="#eventi" data-i18n="nav-eventi">Gli Eventi</a></li>
       <li><a href="#storia" data-i18n="nav-storia">La Storia</a></li>
       <li><a href="#contatti" data-i18n="nav-contatti">Contatti</a></li>
+      <li class="nav-link-cta"><a href="#contatti" data-i18n="nav-cta">Richiedi Preventivo</a></li>
     </ul>
     <div class="nav-right">
       <a href="#contatti" class="nav-cta" data-i18n="nav-cta">Richiedi Preventivo</a>
       <button class="nav-lang" id="lang-toggle" aria-label="Cambia lingua">IT · EN</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
@@ -1199,9 +1326,6 @@
         <img src="assets/images/IMG_4891.jpg" alt="Villa La Margherita — ripresa drone" />
       </div>
       <div class="hero-slide">
-        <img src="assets/images/IMG_4827.JPG" alt="Salone affrescato con vista sul giardino" style="object-position: center 45%;" />
-      </div>
-      <div class="hero-slide">
         <img src="assets/images/IMG_4820.jpg" alt="Giardino con tavoli allestiti per un evento" />
       </div>
       <div class="hero-slide">
@@ -1209,6 +1333,9 @@
       </div>
       <div class="hero-slide">
         <img src="assets/images/IMG_7881.JPG" alt="Facciata villa" style="object-position: center 70%;" />
+      </div>
+      <div class="hero-slide">
+        <img src="assets/images/IMG_4827.JPG" alt="Salone affrescato con vista sul giardino" style="object-position: center 45%;" />
       </div>
       <div class="hero-slide">
         <img src="assets/images/IMG_0366.JPG" alt="Facciata villa 2" style="object-position: center 70%;" />
@@ -1789,6 +1916,25 @@
         if (e.key === 'Escape')     close();
         if (e.key === 'ArrowLeft')  prev();
         if (e.key === 'ArrowRight') next();
+      });
+    })();
+
+    // Mobile nav — hamburger
+    (function() {
+      const btn   = document.getElementById('nav-toggle');
+      const links = document.querySelector('.nav-links');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const open = btn.classList.toggle('open');
+        links.classList.toggle('open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      links.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          btn.classList.remove('open');
+          links.classList.remove('open');
+          document.body.style.overflow = '';
+        });
       });
     })();
 
