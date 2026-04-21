@@ -349,10 +349,40 @@
       height: 3px;
       background: linear-gradient(to right, transparent, #8A6E1A 20%, #D4AF4A 50%, #8A6E1A 80%, transparent);
     }
+
+    /* ─── CUSTOM CURSOR ─── */
+    body { cursor: none; }
+    a, button, [role="button"], label, input, select, textarea { cursor: none; }
+    #cursor-dot {
+      position: fixed; top: 0; left: 0;
+      width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease, opacity 0.2s ease;
+      will-change: transform, left, top;
+    }
+    #cursor-ring {
+      position: fixed; top: 0; left: 0;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.2s ease;
+      will-change: transform, left, top, width, height;
+      opacity: 0.7;
+    }
+    #cursor-ring.expanded { width: 64px; height: 64px; border-color: var(--gold-light); opacity: 1; }
+    @media (hover: none) {
+      #cursor-dot, #cursor-ring { display: none; }
+      body, a, button { cursor: auto; }
+    }
   </style>
 </head>
 <body>
 
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
   <div id="page-curtain"></div>
 
   <!-- ─── HEADER ─── -->
@@ -616,6 +646,29 @@
         }, 0);
       }, { threshold: 0.1 });
       document.querySelectorAll('.img-wipe').forEach(el => wipeObs.observe(el));
+    })();
+
+    // Custom cursor
+    (function() {
+      const dot = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      let rx = window.innerWidth / 2, ry = window.innerHeight / 2, mx = rx, my = ry;
+      const SEL = 'a, button, [role="button"], label, input, select, textarea, [data-cursor-grow]';
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function loop() {
+        rx = lerp(rx, mx, 0.18); ry = lerp(ry, my, 0.18);
+        dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        requestAnimationFrame(loop);
+      }
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+      document.addEventListener('mouseover', e => { if (e.target.closest(SEL)) { ring.classList.add('expanded'); dot.style.transform = 'translate(-50%,-50%) scale(0.4)'; } });
+      document.addEventListener('mouseout',  e => { if (e.target.closest(SEL)) { ring.classList.remove('expanded'); dot.style.transform = 'translate(-50%,-50%) scale(1)'; } });
+      document.addEventListener('mousedown', () => { dot.style.transform = 'translate(-50%,-50%) scale(0.6)'; });
+      document.addEventListener('mouseup',   () => { dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
+      document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+      document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '0.7'; });
+      requestAnimationFrame(loop);
     })();
   </script>
 
