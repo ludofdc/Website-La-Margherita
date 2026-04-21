@@ -1661,10 +1661,21 @@
     (function() {
       const curtain = document.getElementById('page-curtain');
 
-      setTimeout(() => {
+      function openCurtain() {
         curtain.style.transition = 'transform 0.7s cubic-bezier(0.77, 0, 0.18, 1)';
         curtain.style.transform = 'translateY(-100%)';
-      }, 120);
+      }
+
+      setTimeout(openCurtain, 120);
+
+      // Fix bfcache: quando si torna indietro col browser la tenda è già abbassata
+      window.addEventListener('pageshow', e => {
+        if (e.persisted) {
+          curtain.style.transition = 'none';
+          curtain.style.transform = 'translateY(0)';
+          setTimeout(openCurtain, 50);
+        }
+      });
 
       document.addEventListener('click', e => {
         const a = e.target.closest('a[href]');
