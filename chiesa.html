@@ -374,10 +374,10 @@
 
   <!-- ─── HEADER ─── -->
   <header class="page-header">
-    <a href="giardino.html" class="back-link">Il Giardino</a>
-    <p class="page-eyebrow">Gli Spazi · Villa La Margherita</p>
-    <h1 class="page-title" data-text-reveal>La <em>Chiesa</em> di Santa Margherita</h1>
-    <p class="page-desc">La cappella privata annessa alla villa, da secoli luogo di raccoglimento della famiglia Fecia di Cossato. Una cornice sacra e intima per cerimonie indimenticabili.</p>
+    <a href="giardino.html" class="back-link" data-i18n="back">Il Giardino</a>
+    <p class="page-eyebrow" data-i18n="eyebrow">Gli Spazi · Villa La Margherita</p>
+    <h1 class="page-title" data-text-reveal data-i18n-html="title">La <em>Chiesa</em> di Santa Margherita</h1>
+    <p class="page-desc" data-i18n="desc">La cappella privata annessa alla villa, da secoli luogo di raccoglimento della famiglia Fecia di Cossato. Una cornice sacra e intima per cerimonie indimenticabili.</p>
   </header>
 
   <!-- ─── GALLERY ─── -->
@@ -405,18 +405,38 @@
 
   <!-- ─── CLOSING ─── -->
   <div class="closing-section">
-    <p class="closing-text reveal">Un rito in un luogo che porta con sé quattro secoli di storia. Contattateci per saperne di più.</p>
-    <a href="index.html#contatti" class="closing-cta reveal reveal-delay-1">Richiedi Informazioni →</a>
+    <p class="closing-text reveal" data-i18n="closing">Un rito in un luogo che porta con sé quattro secoli di storia. Contattateci per saperne di più.</p>
+    <a href="index.html#contatti" class="closing-cta reveal reveal-delay-1" data-i18n="cta">Richiedi Informazioni →</a>
   </div>
 
   <!-- ─── FOOTER ─── -->
   <footer class="page-footer">
     <a href="index.html" class="footer-logo">Villa La Margherita</a>
     <p class="footer-copy">&copy; 2026 Conti Fecia di Cossato &middot; Cossato, Biella</p>
-    <a href="index.html#contatti" class="footer-cta">Richiedi Preventivo →</a>
+    <a href="index.html#contatti" class="footer-cta" data-i18n="footer-cta">Richiedi Preventivo →</a>
   </footer>
 
   <script>
+    // i18n
+    (function() {
+      const t = {
+        en: {
+          back: 'The Garden',
+          eyebrow: 'Our Spaces · Villa La Margherita',
+          title: 'The <em>Church</em> of Santa Margherita',
+          desc: 'The private chapel annexed to the villa, for centuries a place of devotion for the Fecia di Cossato family. A sacred and intimate setting for unforgettable ceremonies.',
+          closing: 'A ceremony in a place that carries four centuries of history. Contact us to learn more.',
+          cta: 'Request Information →',
+          'footer-cta': 'Request a Quote →'
+        }
+      };
+      const lang = localStorage.getItem('lang') || 'it';
+      if (lang === 'it') return;
+      const tr = t[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => { if (tr[el.dataset.i18n]) el.textContent = tr[el.dataset.i18n]; });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => { if (tr[el.dataset.i18nHtml]) el.innerHTML = tr[el.dataset.i18nHtml]; });
+    })();
+
     (function() {
       const curtain = document.getElementById('page-curtain');
       function openCurtain() {

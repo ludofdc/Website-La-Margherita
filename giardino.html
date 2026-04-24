@@ -390,10 +390,10 @@
 
   <!-- ─── HEADER ─── -->
   <header class="page-header">
-    <a href="index.html" class="back-link">Torna al sito</a>
-    <p class="page-eyebrow">Gli Spazi · Villa La Margherita</p>
-    <h1 class="page-title" data-text-reveal>Il Giardino <em>all'Italiana</em></h1>
-    <p class="page-desc">4.000 mq di giardino formale con parterre, vialetti bordati di siepi, rose antiche, limoni e una terrazza panoramica. Il cuore verde della villa.</p>
+    <a href="index.html" class="back-link" data-i18n="back">Torna al sito</a>
+    <p class="page-eyebrow" data-i18n="eyebrow">Gli Spazi · Villa La Margherita</p>
+    <h1 class="page-title" data-text-reveal data-i18n-html="title">Il Giardino <em>all'Italiana</em></h1>
+    <p class="page-desc" data-i18n="desc">4.000 mq di giardino formale con parterre, vialetti bordati di siepi, rose antiche, limoni e una terrazza panoramica. Il cuore verde della villa.</p>
   </header>
 
   <!-- ─── GALLERY ─── -->
@@ -573,10 +573,28 @@
   <footer class="page-footer">
     <a href="index.html" class="footer-logo">Villa La Margherita</a>
     <p class="footer-copy">&copy; 2026 Conti Fecia di Cossato &middot; Cossato, Biella</p>
-    <a href="index.html#contatti" class="footer-cta">Richiedi Preventivo →</a>
+    <a href="index.html#contatti" class="footer-cta" data-i18n="cta">Richiedi Preventivo →</a>
   </footer>
 
   <script>
+    // i18n
+    (function() {
+      const t = {
+        en: {
+          back: 'Back to site',
+          eyebrow: 'Our Spaces · Villa La Margherita',
+          title: 'The <em>Italian Garden</em>',
+          desc: '4,000 sqm of formal garden with parterres, hedge-lined paths, antique roses, lemon trees and a panoramic terrace. The green heart of the villa.',
+          cta: 'Request a Quote →'
+        }
+      };
+      const lang = localStorage.getItem('lang') || 'it';
+      if (lang === 'it') return;
+      const tr = t[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => { if (tr[el.dataset.i18n]) el.textContent = tr[el.dataset.i18n]; });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => { if (tr[el.dataset.i18nHtml]) el.innerHTML = tr[el.dataset.i18nHtml]; });
+    })();
+
     // Page curtain transition
     (function() {
       const curtain = document.getElementById('page-curtain');
