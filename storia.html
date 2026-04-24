@@ -306,10 +306,100 @@
       background: linear-gradient(to right, transparent, #8A6E1A 20%, #D4AF4A 50%, #8A6E1A 80%, transparent);
     }
 
+    /* ─── PRESS ─── */
+    .press-section {
+      padding: clamp(40px, 6vh, 64px) var(--pad-x);
+      max-width: calc(var(--max-w) + var(--pad-x) * 2);
+      margin: 0 auto;
+      border-top: 1px solid var(--stone-pale);
+    }
+    .press-label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+    }
+    .press-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 80px);
+      align-items: start;
+    }
+    .press-image-wrap {
+      position: relative;
+    }
+    .press-image-wrap img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border: 1px solid var(--stone-pale);
+      filter: grayscale(20%);
+      cursor: zoom-in;
+      transition: filter 0.25s;
+    }
+    .press-image-wrap img:hover { filter: grayscale(0%); }
+
+    /* ─── LIGHTBOX ─── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(28, 26, 20, 0.93);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border: 1px solid rgba(184,151,42,0.3);
+      cursor: default;
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 28px;
+      font-size: 28px;
+      color: var(--stone-light);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    #lightbox-close:hover { color: var(--gold-light); }
+    .press-caption {
+      font-size: 10px;
+      font-weight: 200;
+      color: var(--stone);
+      letter-spacing: 1px;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    .press-body .story-heading { margin-bottom: 20px; }
+    .press-body p {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .press-body p:last-child { margin-bottom: 0; }
+
     @media (max-width: 768px) {
       .story-inner { grid-template-columns: 1fr; gap: 16px; }
       .back-link { position: static; margin-bottom: 24px; display: inline-flex; }
       .page-header { text-align: left; }
+      .press-inner { grid-template-columns: 1fr; }
     }
 
     /* ─── CUSTOM CURSOR ─── */
@@ -342,6 +432,11 @@
   </style>
 </head>
 <body>
+
+  <div id="lightbox">
+    <button id="lightbox-close" aria-label="Chiudi">×</button>
+    <img src="assets/docs/IMG_articoloVilla.JPG" alt="Articolo — Villa La Margherita, un gioiello seicentesco" />
+  </div>
 
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
@@ -392,6 +487,24 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- ─── PRESS ─── -->
+  <div class="press-section">
+    <p class="press-label reveal">Dalla Stampa</p>
+    <div class="press-inner">
+      <div class="press-image-wrap reveal">
+        <img src="assets/docs/IMG_articoloVilla.JPG" alt="Articolo di giornale — Villa La Margherita, un gioiello seicentesco" id="press-img" />
+        <p class="press-caption">Tocca l'immagine per ingrandirla</p>
+        <p class="press-caption" style="margin-top:6px;">Autore non identificato. Se sei il titolare dei diritti, <a href="mailto:info@villalamargherita.com" style="color:var(--stone);text-decoration:underline;">scrivici</a>.</p>
+      </div>
+      <div class="press-body reveal reveal-delay-1">
+        <p class="story-date">Stampa locale</p>
+        <h2 class="story-heading">«Un gioiello <em>seicentesco</em>»</h2>
+        <p>La stampa locale ha definito Villa La Margherita un autentico gioiello architettonico. L'articolo ne descrive gli interni affrescati, l'atmosfera senza tempo e il legame inscindibile con la famiglia Fecia, sottolineando come la villa sappia ancora oggi evocare la grandezza dell'aristocrazia piemontese.</p>
+        <p>Un patrimonio che non appartiene soltanto a una famiglia, ma all'intera comunità di Cossato — e a chiunque abbia il privilegio di varcare il suo cancello.</p>
+      </div>
+    </div>
   </div>
 
   <!-- ─── CLOSING ─── -->
@@ -476,6 +589,15 @@
         Array.from(el.childNodes).forEach(wrapChars);
         requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('chars-visible')));
       });
+    })();
+
+    // Lightbox
+    (function() {
+      const lb = document.getElementById('lightbox');
+      document.getElementById('press-img').addEventListener('click', () => lb.classList.add('open'));
+      document.getElementById('lightbox-close').addEventListener('click', () => lb.classList.remove('open'));
+      lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
     })();
 
     // Custom cursor
