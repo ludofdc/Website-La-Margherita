@@ -338,7 +338,7 @@
       object-fit: contain;
       border: 1px solid var(--stone-pale);
       filter: grayscale(20%);
-      cursor: zoom-in;
+      cursor: none;
       transition: filter 0.25s;
     }
     .press-image-wrap img:hover { filter: grayscale(0%); }
@@ -353,7 +353,7 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
-      cursor: zoom-out;
+      cursor: none;
     }
     #lightbox.open { display: flex; }
     #lightbox img {
@@ -363,7 +363,7 @@
       height: auto;
       object-fit: contain;
       border: 1px solid rgba(184,151,42,0.3);
-      cursor: default;
+      cursor: none;
     }
     #lightbox-close {
       position: absolute;
@@ -397,6 +397,27 @@
     }
     .press-body p:last-child { margin-bottom: 0; }
 
+    .story-img-wrap {
+      margin: 28px 0 20px;
+    }
+    .story-img-wrap img {
+      width: 100%; height: auto;
+      object-fit: contain;
+      border: 1px solid var(--stone-pale);
+      filter: grayscale(15%);
+      cursor: none;
+      transition: filter 0.25s;
+    }
+    .story-img-wrap img:hover { filter: grayscale(0%); }
+    .story-img-caption {
+      font-size: 10px;
+      font-weight: 200;
+      color: var(--stone);
+      letter-spacing: 1px;
+      font-style: italic;
+      margin-top: 8px;
+    }
+
     @media (max-width: 768px) {
       .story-inner { grid-template-columns: 1fr; gap: 16px; }
       .back-link { position: static; margin-bottom: 24px; display: inline-flex; }
@@ -411,7 +432,7 @@
       position: fixed; top: 0; left: 0;
       width: 8px; height: 8px;
       background: var(--gold); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
+      pointer-events: none; z-index: 10002;
       transform: translate(-50%, -50%);
       transition: transform 0.08s ease, opacity 0.2s ease;
       will-change: transform, left, top;
@@ -420,7 +441,7 @@
       position: fixed; top: 0; left: 0;
       width: 36px; height: 36px;
       border: 1.5px solid var(--gold); border-radius: 50%;
-      pointer-events: none; z-index: 9998;
+      pointer-events: none; z-index: 10001;
       transform: translate(-50%, -50%);
       transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.2s ease;
       will-change: transform, left, top, width, height;
@@ -437,7 +458,7 @@
 
   <div id="lightbox">
     <button id="lightbox-close" aria-label="Chiudi">×</button>
-    <img src="assets/docs/IMG_articoloVilla.JPG" alt="Articolo — Villa La Margherita, un gioiello seicentesco" />
+    <img src="" alt="" id="lightbox-img" />
   </div>
 
   <div id="cursor-dot"></div>
@@ -486,6 +507,23 @@
         <h2 class="story-heading" data-i18n-html="s2-heading">Il Conte <em>Carlo</em><br>Fecia di Cossato</h2>
         <p data-i18n="s2-p1">Tra tutti i membri del casato, uno rimane impresso nella memoria collettiva: il conte Carlo Fecia di Cossato. Ufficiale della Regia Marina e sommergibilista tra i più valorosi della Seconda guerra mondiale, Carlo incarnò lo spirito della sua famiglia — coraggio, senso del dovere, fedeltà a ciò in cui credeva.</p>
         <p data-i18n="s2-p2">Morì nel 1944, a soli trentasei anni. Il suo ricordo vive ancora oggi a Cossato e in tutta Italia.</p>
+      </div>
+    </div>
+
+    <div class="story-inner">
+      <div class="reveal">
+        <p class="story-label" data-i18n="s3-label">L'Albero Genealogico</p>
+      </div>
+      <div class="story-body reveal reveal-delay-1">
+        <p class="story-date" data-i18n="s3-date">Dal 1592</p>
+        <h2 class="story-heading" data-i18n-html="s3-heading">Memoria<br><em>manoscritta</em></h2>
+        <p data-i18n="s3-p1">L'albero genealogico della famiglia Fecia di Cossato è un documento interamente manoscritto, redatto e aggiornato a mano di generazione in generazione a partire dal 1592. Oltre quattro secoli di storia familiare custoditi su carta, con una cura che dice molto del carattere del casato.</p>
+        <p data-i18n="s3-p2">Una curiosità che salta subito all'occhio scorrendo i nomi: <strong>Carlo</strong> compare in quasi ogni generazione, come una tradizione tacita e tenace tramandata per secoli, fino al Conte Carlo Fecia di Cossato, l'eroe della Regia Marina.</p>
+        <p data-i18n="s3-p3">Il capostipite documentato è il <em>Nobile Girolamo Fecia</em>, vassallo di Conale. Accanto all'albero compaiono i due stemmi araldici della famiglia, a testimonianza del rango nobiliare riconosciuto già in quell'epoca.</p>
+        <div class="story-img-wrap">
+          <img src="assets/images/albero-genealogico.jpeg" alt="Albero Genealogico della Famiglia Fecia di Cossato dal 1592" id="genealogy-img" />
+          <p class="story-img-caption" data-i18n="s3-caption">Tocca l'immagine per ingrandirla</p>
+        </div>
       </div>
     </div>
 
@@ -595,11 +633,24 @@
 
     // Lightbox
     (function() {
-      const lb = document.getElementById('lightbox');
-      document.getElementById('press-img').addEventListener('click', () => lb.classList.add('open'));
-      document.getElementById('lightbox-close').addEventListener('click', () => lb.classList.remove('open'));
-      lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+      const lb    = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightbox-img');
+      function openLb(src, alt) {
+        lbImg.src = src; lbImg.alt = alt;
+        lb.classList.add('open');
+        document.getElementById('cursor-dot').style.opacity = '1';
+        document.getElementById('cursor-ring').style.opacity = '0.7';
+        document.getElementById('cursor-dot').style.opacity = '1';
+        document.getElementById('cursor-ring').style.opacity = '0.7';
+      }
+      function closeLb() { lb.classList.remove('open'); }
+      document.getElementById('press-img').addEventListener('click', () =>
+        openLb('assets/docs/IMG_articoloVilla.JPG', 'Articolo — Villa La Margherita, un gioiello seicentesco'));
+      document.getElementById('genealogy-img').addEventListener('click', () =>
+        openLb('assets/images/albero-genealogico.jpeg', 'Albero Genealogico della Famiglia Fecia di Cossato dal 1592'));
+      document.getElementById('lightbox-close').addEventListener('click', closeLb);
+      lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
     })();
 
     // i18n
@@ -622,6 +673,13 @@
           's2-heading': 'Count <em>Carlo</em><br>Fecia di Cossato',
           's2-p1': 'Among all the members of the family, one remains etched in collective memory: Count Carlo Fecia di Cossato. An officer of the Royal Navy and one of the most decorated submariners of the Second World War, Carlo embodied the spirit of his family — courage, sense of duty, loyalty to what he believed in.',
           's2-p2': 'He died in 1944, at just thirty-six years of age. His memory lives on today in Cossato and throughout Italy.',
+          's3-label': 'The Family Tree',
+          's3-date': 'Since 1592',
+          's3-heading': 'A handwritten<br><em>memory</em>',
+          's3-p1': 'The genealogical tree of the Fecia di Cossato family is an entirely handwritten document, compiled and updated by hand from generation to generation since 1592. More than four centuries of family history preserved on paper — a testament to the dedication that has always defined this household.',
+          's3-p2': 'One detail immediately stands out when reading through the names: <strong>Carlo</strong> appears in almost every generation, a quiet and steadfast tradition passed down through the centuries — all the way to Count Carlo Fecia di Cossato, the hero of the Royal Navy.',
+          's3-p3': 'The earliest documented ancestor is the <em>Noble Girolamo Fecia</em>, vassal of Conale. Flanking the tree are the two heraldic coats of arms of the family, bearing witness to a noble rank already recognised in that era.',
+          's3-caption': 'Tap to enlarge',
           'press-label': 'In the Press',
           'press-caption': 'Tap the image to enlarge',
           'press-copyright': 'Author unidentified. If you hold the rights, <a href="mailto:info@villalamargherita.com" style="color:var(--stone);text-decoration:underline;">write to us</a>.',
@@ -659,7 +717,7 @@
       document.addEventListener('mouseout',  e => { if (e.target.closest(SEL)) { ring.classList.remove('expanded'); dot.style.transform = 'translate(-50%,-50%) scale(1)'; } });
       document.addEventListener('mousedown', () => { dot.style.transform = 'translate(-50%,-50%) scale(0.6)'; });
       document.addEventListener('mouseup',   () => { dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
-      document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+      document.addEventListener('mouseleave', () => { if (document.querySelector('#lightbox.open')) return; dot.style.opacity = '0'; ring.style.opacity = '0'; });
       document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '0.7'; });
       requestAnimationFrame(loop);
     })();
