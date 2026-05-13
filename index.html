@@ -1175,7 +1175,7 @@
       background: var(--gold);
       border-radius: 50%;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 10002;
       transform: translate(-50%, -50%);
       transition: transform 0.08s ease, opacity 0.2s ease;
       will-change: transform, left, top;
@@ -1188,7 +1188,7 @@
       border: 1.5px solid var(--gold);
       border-radius: 50%;
       pointer-events: none;
-      z-index: 9998;
+      z-index: 10001;
       transform: translate(-50%, -50%);
       transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.2s ease;
       will-change: transform, left, top, width, height;
@@ -1995,6 +1995,8 @@
         lbCount.textContent = (current + 1) + ' / ' + images.length;
         lb.classList.add('open');
         document.body.style.overflow = 'hidden';
+        document.getElementById('cursor-dot').style.opacity = '1';
+        document.getElementById('cursor-ring').style.opacity = '0.7';
       }
 
       function close() {
@@ -2111,6 +2113,7 @@
       });
 
       document.addEventListener('mouseleave', () => {
+        if (document.querySelector('#lightbox.open')) return;
         dot.style.opacity  = '0';
         ring.style.opacity = '0';
       });

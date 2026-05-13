@@ -380,7 +380,7 @@
 
   <!-- ─── HEADER ─── -->
   <header class="page-header">
-    <a href="giardino.html" class="back-link" data-i18n="back">Il Giardino</a>
+    <a href="index.html" class="back-link" data-i18n="back">Torna al sito</a>
     <p class="page-eyebrow" data-i18n="eyebrow">Gli Spazi · Villa La Margherita</p>
     <h1 class="page-title" data-text-reveal data-i18n-html="title">La <em>Chiesa</em> di Santa Margherita</h1>
     <p class="page-desc" data-i18n="desc">La cappella privata annessa alla villa, da secoli luogo di raccoglimento della famiglia Fecia di Cossato. Una cornice sacra e intima per cerimonie indimenticabili.</p>
@@ -486,6 +486,8 @@
       lbCounter.textContent = (current + 1) + ' / ' + images.length;
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
+      document.getElementById('cursor-dot').style.opacity = '1';
+      document.getElementById('cursor-ring').style.opacity = '0.7';
     }
     function closeLightbox() {
       lightbox.classList.remove('open');
@@ -585,7 +587,7 @@
       document.addEventListener('mouseout',  e => { if (e.target.closest(SEL)) { ring.classList.remove('expanded'); dot.style.transform = 'translate(-50%,-50%) scale(1)'; } });
       document.addEventListener('mousedown', () => { dot.style.transform = 'translate(-50%,-50%) scale(0.6)'; });
       document.addEventListener('mouseup',   () => { dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
-      document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+      document.addEventListener('mouseleave', () => { if (document.querySelector('.lightbox.open')) return; dot.style.opacity = '0'; ring.style.opacity = '0'; });
       document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '0.7'; });
       requestAnimationFrame(loop);
     })();
